@@ -26,6 +26,10 @@
             <id>vaadin-addons</id>
             <url>http://maven.vaadin.com/vaadin-addons</url>
         </repository>
+        <repository>
+            <id>mvysny-github</id>
+            <url>https://dl.bintray.com/mvysny/github</url>
+        </repository>
     </repositories>
 
     <parent>
@@ -67,7 +71,14 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
-        
+
+        <dependency>
+            <groupId>com.github.kaributesting</groupId>
+            <artifactId>karibu-testing-v10</artifactId>
+            <version>0.5.1</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
