@@ -1,20 +1,14 @@
 package com.vaadin.tshirtshop;
 
-import com.github.karibu.mockhttp.MockContext;
-import com.github.karibu.mockhttp.MockServletConfig;
-import com.github.karibu.testing.v10.LocatorJ;
 import com.github.karibu.testing.v10.MockVaadin;
 import com.github.karibu.testing.v10.MockedUI;
 import com.github.karibu.testing.v10.Routes;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.function.DeploymentConfiguration;
 import com.vaadin.flow.server.ServiceException;
 import com.vaadin.flow.server.VaadinRequest;
-import com.vaadin.flow.server.VaadinService;
-import com.vaadin.flow.server.VaadinServlet;
 import com.vaadin.flow.server.VaadinServletService;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.server.startup.RouteRegistry;
@@ -24,11 +18,9 @@ import com.vaadin.tshirtshop.domain.TShirtOrder;
 import com.vaadin.tshirtshop.domain.TShirtOrderRepository;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
@@ -36,10 +28,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import java.lang.reflect.Method;
 import java.util.List;
-
-import kotlin.jvm.functions.Function0;
 
 import static com.github.karibu.testing.v10.LocatorJ._click;
 import static com.github.karibu.testing.v10.LocatorJ._get;
@@ -84,13 +73,7 @@ public class ApplicationTests {
                 return service;
             }
         };
-        final MockContext mockContext = new MockContext();
-        servlet.init(new MockServletConfig(mockContext));
-        VaadinService.setCurrent(servlet.getService());
-
-        final Method createSession = MockVaadin.class.getDeclaredMethod("createSession", MockContext.class, VaadinServlet.class, Function0.class);
-        createSession.setAccessible(true);
-        createSession.invoke(MockVaadin.INSTANCE, mockContext, servlet, (Function0<UI>) () -> new MockedUI());
+        MockVaadin.setup(MockedUI::new, servlet);
     }
 
     @After
