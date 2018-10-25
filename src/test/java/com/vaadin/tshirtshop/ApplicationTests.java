@@ -1,10 +1,13 @@
 package com.vaadin.tshirtshop;
 
+import com.github.karibu.testing.v10.GridKt;
 import com.github.karibu.testing.v10.MockVaadin;
 import com.github.karibu.testing.v10.MockedUI;
 import com.github.karibu.testing.v10.Routes;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.function.DeploymentConfiguration;
 import com.vaadin.flow.server.ServiceException;
@@ -30,6 +33,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
+import static com.github.karibu.testing.v10.GridKt.expectRows;
 import static com.github.karibu.testing.v10.LocatorJ._click;
 import static com.github.karibu.testing.v10.LocatorJ._get;
 import static com.github.karibu.testing.v10.LocatorJ._setValue;
@@ -74,6 +78,7 @@ public class ApplicationTests {
             }
         };
         MockVaadin.setup(MockedUI::new, servlet);
+        repo.deleteAll();
     }
 
     @After
@@ -82,7 +87,7 @@ public class ApplicationTests {
     }
 
     @Test
-    public void smokeTest() {
+    public void placeOrder() {
         _setValue(_get(TextField.class, spec -> spec.withCaption("Name")), "Foo");
         _setValue(_get(TextField.class, spec -> spec.withCaption("Email")), "foo@bar.baz");
         _setValue(_get(ComboBox.class, spec -> spec.withCaption("T-shirt size")), "Small");
@@ -91,5 +96,11 @@ public class ApplicationTests {
         final List<TShirtOrder> all = repo.findAll();
         assertEquals("orders=" + all, 1, all.size());
         assertEquals("Foo", all.get(0).getName());
+    }
+
+    @Test
+    public void listOrders() {
+        UI.getCurrent().navigate(ListOrdersView.class);
+        expectRows(_get(Grid.class), 0);
     }
 }
