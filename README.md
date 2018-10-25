@@ -1,4 +1,8 @@
-# Basic Vaadin and Spring Boot example 
+[![Build Status](https://travis-ci.org/mvysny/t-shirt-shop-example.svg?branch=master)](https://travis-ci.org/mvysny/t-shirt-shop-example)
+
+# Karibu Testing example with Vaadin 10 and Spring Boot
+
+This project demonstrates the possibility to test your Vaadin 10 Spring apps with [Karibu Testing](https://github.com/mvysny/karibu-testing).
 
 The example contains a view that submits T-shirt orders. The UI is similar to what you might have seen in Vaadin expo booth. 
 
