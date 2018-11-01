@@ -24,7 +24,7 @@
         </repository>
         <repository>
             <id>vaadin-addons</id>
-            <url>http://maven.vaadin.com/vaadin-addons</url>
+            <url>https://maven.vaadin.com/vaadin-addons</url>
         </repository>
         <repository>
             <id>mvysny-github</id>
@@ -80,7 +80,7 @@
         <dependency>
             <groupId>com.github.kaributesting</groupId>
             <artifactId>karibu-testing-v10</artifactId>
-            <version>0.5.2</version>
+            <version>0.5.3</version>
             <scope>test</scope>
         </dependency>
 
@@ -92,6 +92,15 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+		<!-- JUnit 5 requires Surefire version 2.22.0 or higher -->
+		<plugin>
+			<artifactId>maven-surefire-plugin</artifactId>
+			<version>2.22.1</version>
+			<configuration>
+				<useSystemClassLoader>false</useSystemClassLoader>
+			</configuration>
+		</plugin>
         </plugins>
     </build>
 
