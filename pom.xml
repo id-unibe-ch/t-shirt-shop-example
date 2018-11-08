@@ -80,7 +80,7 @@
         <dependency>
             <groupId>com.github.kaributesting</groupId>
             <artifactId>karibu-testing-v10</artifactId>
-            <version>0.5.4</version>
+            <version>0.5.6</version>
             <scope>test</scope>
         </dependency>
 
