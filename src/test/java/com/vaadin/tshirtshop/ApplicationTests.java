@@ -1,9 +1,6 @@
 package com.vaadin.tshirtshop;
 
-import com.github.karibu.testing.v10.GridKt;
-import com.github.karibu.testing.v10.MockVaadin;
-import com.github.karibu.testing.v10.MockedUI;
-import com.github.karibu.testing.v10.Routes;
+import com.github.mvysny.kaributesting.v10.*;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -33,10 +30,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
-import static com.github.karibu.testing.v10.GridKt.expectRows;
-import static com.github.karibu.testing.v10.LocatorJ._click;
-import static com.github.karibu.testing.v10.LocatorJ._get;
-import static com.github.karibu.testing.v10.LocatorJ._setValue;
+import static com.github.mvysny.kaributesting.v10.GridKt.*;
+import static com.github.mvysny.kaributesting.v10.LocatorJ.*;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
