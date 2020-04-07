@@ -17,6 +17,7 @@ package com.vaadin.tshirtshop;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.html.H1;
@@ -30,7 +31,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.tshirtshop.domain.TShirtOrder;
 
-@StyleSheet("frontend://src/styles.css")
+@CssImport("./src/styles.css")
 @Route
 public class MainView extends VerticalLayout {
 
@@ -40,7 +41,7 @@ public class MainView extends VerticalLayout {
 
     TextField name = new TextField("Name");
     TextField email = new TextField("Email");
-    ComboBox<String> shirtSize = new ComboBox("T-shirt size");
+    ComboBox<String> shirtSize = new ComboBox<>("T-shirt size");
 
     public MainView(TShirtService service) {
         this.service = service;

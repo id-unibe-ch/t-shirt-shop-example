@@ -1,3 +1,7 @@
 .idea
 *.iml
 target
+
+# The following files are generated/updated by vaadin-maven-plugin
+node_modules/
+webpack.generated.js
