@@ -6,19 +6,13 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.function.DeploymentConfiguration;
-import com.vaadin.flow.server.ServiceException;
-import com.vaadin.flow.server.VaadinRequest;
-import com.vaadin.flow.server.VaadinServletService;
-import com.vaadin.flow.server.VaadinSession;
-import com.vaadin.flow.server.startup.RouteRegistry;
 import com.vaadin.flow.spring.SpringServlet;
-import com.vaadin.flow.spring.SpringVaadinServletService;
 import com.vaadin.tshirtshop.domain.TShirtOrder;
 import com.vaadin.tshirtshop.domain.TShirtOrderRepository;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +34,12 @@ import static org.junit.Assert.assertEquals;
 @DirtiesContext
 public class ApplicationTests {
 
+    private static Routes routes;
+    @BeforeClass
+    public static void discoverRoutes() {
+         routes = new Routes().autoDiscoverViews("com.vaadin.tshirtshop");
+    }
+
     @Autowired
     private ApplicationContext ctx;
 
@@ -48,30 +48,7 @@ public class ApplicationTests {
 
     @Before
     public void setup() throws Exception {
-        final RouteRegistry registry = new Routes().autoDiscoverViews("com.vaadin.tshirtshop").createRegistry();
-        final SpringServlet servlet = new SpringServlet(ctx) {
-            @Override
-            protected VaadinServletService createServletService(DeploymentConfiguration deploymentConfiguration) throws ServiceException {
-                final VaadinServletService service = new SpringVaadinServletService(this, deploymentConfiguration, ctx) {
-                    @Override
-                    protected boolean isAtmosphereAvailable() {
-                        return false;
-                    }
-
-                    @Override
-                    protected RouteRegistry getRouteRegistry() {
-                        return registry;
-                    }
-
-                    @Override
-                    public String getMainDivId(VaadinSession session, VaadinRequest request) {
-                        return "ROOT-1";
-                    }
-                };
-                service.init();
-                return service;
-            }
-        };
+        final SpringServlet servlet = new MockSpringServlet(routes, ctx);
         MockVaadin.setup(MockedUI::new, servlet);
         repo.deleteAll();
     }
