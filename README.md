@@ -1,8 +1,8 @@
 [![Build Status](https://travis-ci.org/mvysny/t-shirt-shop-example.svg?branch=master)](https://travis-ci.org/mvysny/t-shirt-shop-example)
 
-# Karibu Testing example with Vaadin 10 and Spring Boot
+# Karibu Testing example with Vaadin 14 and Spring Boot
 
-This project demonstrates the possibility to test your Vaadin 10 Spring
+This project demonstrates the possibility to test your Vaadin 14 Spring
 apps with [Karibu Testing](https://github.com/mvysny/karibu-testing).
 
 The example contains a view that submits T-shirt orders.
