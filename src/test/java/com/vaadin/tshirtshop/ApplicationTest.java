@@ -32,7 +32,7 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 @WebAppConfiguration
 @DirtiesContext
-public class ApplicationTests {
+public class ApplicationTest {
 
     private static Routes routes;
     @BeforeClass
