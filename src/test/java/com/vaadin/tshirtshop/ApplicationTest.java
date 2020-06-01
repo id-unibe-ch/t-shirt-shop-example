@@ -10,16 +10,16 @@ import com.vaadin.flow.spring.SpringServlet;
 import com.vaadin.tshirtshop.domain.TShirtOrder;
 import com.vaadin.tshirtshop.domain.TShirtOrderRepository;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
@@ -28,14 +28,14 @@ import static com.github.mvysny.kaributesting.v10.GridKt.*;
 import static com.github.mvysny.kaributesting.v10.LocatorJ.*;
 import static org.junit.Assert.assertEquals;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @WebAppConfiguration
 @DirtiesContext
 public class ApplicationTest {
 
     private static Routes routes;
-    @BeforeClass
+    @BeforeAll
     public static void discoverRoutes() {
          routes = new Routes().autoDiscoverViews("com.vaadin.tshirtshop");
     }
@@ -46,14 +46,14 @@ public class ApplicationTest {
     @Autowired
     private TShirtOrderRepository repo;
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
         final SpringServlet servlet = new MockSpringServlet(routes, ctx);
         MockVaadin.setup(MockedUI::new, servlet);
         repo.deleteAll();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         MockVaadin.tearDown();
     }
