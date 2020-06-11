@@ -49,7 +49,7 @@ public class ApplicationTest {
     @BeforeEach
     public void setup() throws Exception {
         final SpringServlet servlet = new MockSpringServlet(routes, ctx);
-        MockVaadin.setup(MockedUI::new, servlet);
+        MockVaadin.setup(UI::new, servlet);
         repo.deleteAll();
     }
 
