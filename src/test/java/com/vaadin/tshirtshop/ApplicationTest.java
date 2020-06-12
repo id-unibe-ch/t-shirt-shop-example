@@ -72,7 +72,20 @@ public class ApplicationTest {
 
     @Test
     public void listOrders() {
+        // initially the Grid is empty
         UI.getCurrent().navigate(ListOrdersView.class);
         expectRows(_get(Grid.class), 0);
+
+        // test the Grid with a single row. First, create a dummy order
+        final TShirtOrder order = new TShirtOrder();
+        order.setName("Foo");
+        order.setEmail("foo@bar.baz");
+        order.setShirtSize("Small");
+        repo.save(order);
+        // reload the page in order to refresh the Grid
+        UI.getCurrent().getPage().reload();
+        // now assert that the Grid has one row
+        expectRows(_get(Grid.class), 1);
+        expectRow(_get(Grid.class), 0, "Foo", "foo@bar.baz", "Small", "Button[icon='vaadin:trash']");
     }
 }
