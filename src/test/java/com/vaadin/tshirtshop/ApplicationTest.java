@@ -10,6 +10,7 @@ import com.vaadin.flow.spring.SpringServlet;
 import com.vaadin.tshirtshop.domain.TShirtOrder;
 import com.vaadin.tshirtshop.domain.TShirtOrderRepository;
 
+import kotlin.jvm.functions.Function0;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,7 +49,8 @@ public class ApplicationTest {
 
     @BeforeEach
     public void setup() throws Exception {
-        final SpringServlet servlet = new MockSpringServlet(routes, ctx);
+        final Function0<UI> uiFactory = UI::new;
+        final SpringServlet servlet = new MockSpringServlet(routes, ctx, uiFactory);
         MockVaadin.setup(UI::new, servlet);
         repo.deleteAll();
     }
