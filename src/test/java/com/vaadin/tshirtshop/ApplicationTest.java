@@ -48,7 +48,7 @@ public class ApplicationTest {
     private TShirtOrderRepository repo;
 
     @BeforeEach
-    public void setup() throws Exception {
+    public void setup() {
         final Function0<UI> uiFactory = UI::new;
         final SpringServlet servlet = new MockSpringServlet(routes, ctx, uiFactory);
         MockVaadin.setup(UI::new, servlet);

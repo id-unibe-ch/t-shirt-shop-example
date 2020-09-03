@@ -1,21 +1,16 @@
 package com.vaadin.tshirtshop;
 
+import com.github.mvysny.kaributesting.v10.MockVaadinHelper;
 import com.github.mvysny.kaributesting.v10.Routes;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.function.DeploymentConfiguration;
-import com.vaadin.flow.function.SerializableSupplier;
-import com.vaadin.flow.server.ServiceException;
-import com.vaadin.flow.server.VaadinRequest;
-import com.vaadin.flow.server.VaadinServletService;
-import com.vaadin.flow.server.VaadinSession;
+import com.vaadin.flow.server.*;
 import com.vaadin.flow.spring.SpringServlet;
 import com.vaadin.flow.spring.SpringVaadinServletService;
 import kotlin.jvm.functions.Function0;
-import kotlin.reflect.KFunction;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.ApplicationContext;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 
 /**
@@ -37,11 +32,10 @@ class MockSpringServlet extends SpringServlet {
     }
 
     @Override
-    public void init(ServletConfig servletConfig) throws ServletException {
-        routes.register(servletConfig.getServletContext());
-        super.init(servletConfig);
+    protected DeploymentConfiguration createDeploymentConfiguration() throws ServletException {
+        MockVaadinHelper.INSTANCE.mockFlowBuildInfo(this);
+        return super.createDeploymentConfiguration();
     }
-
 
     @Override
     protected VaadinServletService createServletService(DeploymentConfiguration deploymentConfiguration) throws ServiceException {
@@ -62,6 +56,7 @@ class MockSpringServlet extends SpringServlet {
             }
         };
         service.init();
+        routes.register((VaadinServletContext) service.getContext());
         return service;
     }
 }
