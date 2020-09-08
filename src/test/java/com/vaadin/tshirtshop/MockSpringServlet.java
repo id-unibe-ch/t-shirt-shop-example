@@ -6,7 +6,6 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.function.DeploymentConfiguration;
 import com.vaadin.flow.server.*;
 import com.vaadin.flow.spring.SpringServlet;
-import com.vaadin.flow.spring.SpringVaadinServletService;
 import kotlin.jvm.functions.Function0;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.ApplicationContext;
@@ -14,6 +13,8 @@ import org.springframework.context.ApplicationContext;
 import javax.servlet.ServletException;
 
 /**
+ * Makes sure that the {@link #routes} are properly registered,
+ * and that {@link MockSpringServletService} is used instead of vanilla {@link com.vaadin.flow.spring.SpringVaadinServletService}.
  * @author mavi
  */
 class MockSpringServlet extends SpringServlet {
@@ -39,22 +40,7 @@ class MockSpringServlet extends SpringServlet {
 
     @Override
     protected VaadinServletService createServletService(DeploymentConfiguration deploymentConfiguration) throws ServiceException {
-        final VaadinServletService service = new SpringVaadinServletService(this, deploymentConfiguration, ctx) {
-            @Override
-            protected boolean isAtmosphereAvailable() {
-                return false;
-            }
-
-            @Override
-            public String getMainDivId(VaadinSession session, VaadinRequest request) {
-                return "ROOT-1";
-            }
-
-            @Override
-            protected VaadinSession createVaadinSession(VaadinRequest request) {
-                return new MockSpringVaadinSession(this, uiFactory);
-            }
-        };
+        final VaadinServletService service = new MockSpringServletService(this, deploymentConfiguration, ctx, uiFactory);
         service.init();
         routes.register((VaadinServletContext) service.getContext());
         return service;

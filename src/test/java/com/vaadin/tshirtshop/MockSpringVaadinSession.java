@@ -11,7 +11,16 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * @author Martin Vysny <mavi@vaadin.com>
+ * A Vaadin Session with two important differences:
+ *
+ * <ul>
+ *     <li></li>Provides a lock that's always held. This is needed order for the test methods to able to
+ *   talk to Vaadin components directly, since you can only do that with a session lock held.</li>
+ * <li>Creates a new session when this one is closed. This is used to simulate a logout
+ *   which closes the session - we need to have a new fresh session to be able to continue testing.
+ *   In order to do that, simply override {@link #close()}, call `super.close()` then call
+ *   {@link MockVaadin#afterSessionClose}.</li>
+ *   </ul>
  */
 public class MockSpringVaadinSession extends SpringVaadinSession {
     /**

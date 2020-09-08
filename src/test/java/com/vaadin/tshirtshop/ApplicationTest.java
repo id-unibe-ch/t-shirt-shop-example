@@ -29,6 +29,11 @@ import static com.github.mvysny.kaributesting.v10.GridKt.*;
 import static com.github.mvysny.kaributesting.v10.LocatorJ.*;
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Uses Karibu-Testing to test the app itself. First, {@link #routes} are auto-discovered;
+ * then a specially mocked {@link MockSpringServlet} is used to setup Karibu-Testing
+ * properly and allow Vaadin to work in mocked environment.
+ */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @WebAppConfiguration
@@ -51,7 +56,7 @@ public class ApplicationTest {
     public void setup() {
         final Function0<UI> uiFactory = UI::new;
         final SpringServlet servlet = new MockSpringServlet(routes, ctx, uiFactory);
-        MockVaadin.setup(UI::new, servlet);
+        MockVaadin.setup(uiFactory, servlet);
         repo.deleteAll();
     }
 
