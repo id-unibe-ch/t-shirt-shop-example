@@ -1,6 +1,7 @@
 package com.vaadin.tshirtshop;
 
 import com.github.mvysny.kaributesting.v10.*;
+import com.github.mvysny.kaributesting.v10.spring.MockSpringServlet;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
