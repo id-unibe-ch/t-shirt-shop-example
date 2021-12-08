@@ -12,10 +12,7 @@ import com.vaadin.tshirtshop.domain.TShirtOrder;
 import com.vaadin.tshirtshop.domain.TShirtOrderRepository;
 
 import kotlin.jvm.functions.Function0;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,7 +25,7 @@ import java.util.List;
 
 import static com.github.mvysny.kaributesting.v10.GridKt.*;
 import static com.github.mvysny.kaributesting.v10.LocatorJ.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Uses Karibu-Testing to test the app itself. First, {@link #routes} are auto-discovered;
@@ -74,7 +71,7 @@ public class ApplicationTest {
         _click(_get(Button.class, spec -> spec.withCaption("Place order")));
 
         final List<TShirtOrder> all = repo.findAll();
-        assertEquals("orders=" + all, 1, all.size());
+        assertEquals(1, all.size(), "orders=" + all);
         assertEquals("Foo", all.get(0).getName());
     }
 
@@ -94,6 +91,6 @@ public class ApplicationTest {
         UI.getCurrent().getPage().reload();
         // now assert that the Grid has one row
         expectRows(_get(Grid.class), 1);
-        expectRow(_get(Grid.class), 0, "Foo", "foo@bar.baz", "Small", "Button[icon='vaadin:trash']");
+        expectRow(_get(Grid.class), 0, "Foo", "foo@bar.baz", "Small", "Button[icon='vaadin:trash', @theme='icon']");
     }
 }
