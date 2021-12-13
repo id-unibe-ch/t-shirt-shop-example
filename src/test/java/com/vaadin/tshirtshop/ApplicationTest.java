@@ -32,9 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * then a specially mocked {@link MockSpringServlet} is used to setup Karibu-Testing
  * properly and allow Vaadin to work in mocked environment.
  */
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
-@WebAppConfiguration
 @DirtiesContext
 public class ApplicationTest {
 
