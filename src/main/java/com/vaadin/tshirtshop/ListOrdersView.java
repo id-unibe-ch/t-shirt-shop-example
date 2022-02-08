@@ -27,6 +27,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.tshirtshop.domain.TShirtOrder;
@@ -44,6 +45,7 @@ public class ListOrdersView extends VerticalLayout {
         H1 heading = new H1("List of submitted orders");
         Button update = new Button(VaadinIcon.REFRESH.create());
         RouterLink orderView = new RouterLink("Submit new order", MainView.class);
+        orderView.setId("neworder");
         add(heading, update, orders, orderView);
         
         orders.setColumns("name", "email", "shirtSize");
@@ -55,7 +57,20 @@ public class ListOrdersView extends VerticalLayout {
             });
             return deleteBtn;
         });
+
+        orders.addColumn(
+            new ComponentRenderer<>(
+                model -> {
+                    RouterLink routerLinkEdit = new RouterLink("back", MainView.class);
+                    routerLinkEdit.setId("testid");
+                    HorizontalLayout buttons = new HorizontalLayout(routerLinkEdit);
+                    return routerLinkEdit;
+//                    return buttons;
+                }
+            )
+        );
         listOrders();
+
         
         update.addClickListener(e -> listOrders());
         

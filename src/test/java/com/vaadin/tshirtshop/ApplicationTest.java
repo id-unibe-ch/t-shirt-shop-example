@@ -7,6 +7,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.spring.SpringServlet;
 import com.vaadin.tshirtshop.domain.TShirtOrder;
 import com.vaadin.tshirtshop.domain.TShirtOrderRepository;
@@ -89,6 +90,54 @@ public class ApplicationTest {
         UI.getCurrent().getPage().reload();
         // now assert that the Grid has one row
         expectRows(_get(Grid.class), 1);
-        expectRow(_get(Grid.class), 0, "Foo", "foo@bar.baz", "Small", "Button[icon='vaadin:trash', @theme='icon']");
+        expectRow(_get(Grid.class), 0, "Foo", "foo@bar.baz", "Small", "Button[icon='vaadin:trash', @theme='icon']", "RouterLink[#testid, text='back']");
+    }
+
+    @Test
+    public void moveBack() {
+        // initially the Grid is empty
+        UI.getCurrent().navigate(ListOrdersView.class);
+        expectRows(_get(Grid.class), 0);
+
+        // test the Grid with a single row. First, create a dummy order
+        final TShirtOrder order = new TShirtOrder();
+        order.setName("Foo");
+        order.setEmail("foo@bar.baz");
+        order.setShirtSize("Small");
+        repo.save(order);
+        // reload the page in order to refresh the Grid
+        UI.getCurrent().getPage().reload();
+        // now assert that the Grid has one row
+        expectRows(_get(Grid.class), 1);
+        expectRow(_get(Grid.class), 0, "Foo", "foo@bar.baz", "Small", "Button[icon='vaadin:trash', @theme='icon']", "RouterLink[#testid, text='back']");
+
+        RouterLinkKt._click(_get(RouterLink.class, spec -> spec.withId("testid")));
+
+        _assertOne(MainView.class);
+
+    }
+
+    @Test
+    public void moveBack2() {
+        // initially the Grid is empty
+        UI.getCurrent().navigate(ListOrdersView.class);
+        expectRows(_get(Grid.class), 0);
+
+        // test the Grid with a single row. First, create a dummy order
+        final TShirtOrder order = new TShirtOrder();
+        order.setName("Foo");
+        order.setEmail("foo@bar.baz");
+        order.setShirtSize("Small");
+        repo.save(order);
+        // reload the page in order to refresh the Grid
+        UI.getCurrent().getPage().reload();
+        // now assert that the Grid has one row
+        expectRows(_get(Grid.class), 1);
+        expectRow(_get(Grid.class), 0, "Foo", "foo@bar.baz", "Small", "Button[icon='vaadin:trash', @theme='icon']", "RouterLink[#testid, text='back']");
+
+        RouterLinkKt._click(_get(RouterLink.class, spec -> spec.withId("neworder")));
+
+        _assertOne(MainView.class);
+
     }
 }

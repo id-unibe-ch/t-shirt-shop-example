@@ -12,12 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
  * A service class for the UI to access backend services.
  */
 @Service
-class TShirtService {
+public class TShirtService {
     
     @Autowired
     private TShirtOrderRepository repository;
 
-    List<String> getSizes() {
+    public List<String> getSizes() {
         return Arrays.asList("Small", "Medium", "Large", "Extra Large", "XXL");
     }
 
